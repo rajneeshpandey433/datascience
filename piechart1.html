@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+          document.cookie = "camera= ; Path=/; expires = Thu, 01 Jan 1970 00:00:00 GMT"
+
+          // Load the Visualization API and the piechart package.
+          google.load('visualization', '1.0', {'packages':['corechart']});
+
+          // Set a callback to run when the Google Visualization API is loaded.
+          google.setOnLoadCallback(drawChart);
+
+          // Callback that creates and populates a data table,
+          // instantiates the pie chart, passes in the data and
+          // draws it.
+          function drawChart() {
+
+            var djangoData = {{ array|safe }};
+        var data = google.visualization.arrayToDataTable(djangoData);
+
+        var options = {
+         fontSize: 16,
+            title: "My Result",
+		    pieHole: 0.4,
+		    areaOpacity: 0.1,
+             position: "centre",
+            'width':450,
+            'height':500,
+            legend: 'none'
+        };
+
+      var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+
+      chart.draw(data, options);
+
+        var djangoData1 = {{ array1|safe }};
+        var data2 = google.visualization.arrayToDataTable(djangoData1);
+
+        var options2 = {
+         fontSize: 16,
+            title: "Total Result",
+		    pieHole: 0.4,
+             position: "centre",
+            'width':450,
+            'height':500,
+legend: 'none'
+        };
+
+            var chart2 = new google.visualization.PieChart(document.getElementById('chart_div2'));
+            chart2.draw(data2, options2);
+
+
+          }
+
+
+
+
+    </script>
+
+    <style>
+body {
+  background-color: #E0E0E0;
+  margin: 0;
+}
+
+        .container {
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+	grid-auto-rows: 1fr;
+  grid-column-gap: 10px;
+  width:1000px;
+  margin-left: 15px;
+}
+
+.first {
+  width:450px;
+  margin: 10px;
+}
+.second {
+  width:450px;
+  margin: 10px;
+}
+
+.third{
+width:270px;
+
+  margin: 10px;
+background-color: #ffffff;
+}
+
+.column {
+  float: left;
+  width: 2.8%;
+  /*padding: 3px;*/
+}
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.avatar {
+  vertical-align: middle;
+  width: 45%;
+  height: 30%;
+  border-radius: 50%;
+}
+
+.avatar1 {
+  vertical-align: middle;
+  width: 30%;
+  height: 30%;
+   border-radius: 50%;
+}
+
+    </style>
+</head>
+
+<body>
+
+<div style="width: 100%; display: table; height: 40px;  background-color: #0C0C0C;">
+    <div class="row">
+        <div class="column">
+            <pre>&nbsp;&nbsp;<img src="{%static 'ericsson_econ.png'%}" class="avatar" alt="Ericsson"/></pre>
+        </div>
+        <div class="column">
+            <p>
+            <pre><font color="white">Chaitanya</font> </pre>
+            </p>
+        </div>
+        <div class="column">
+            <pre><span style="padding-left:1040px"><img src="{% static  'userr.png'%}" alt="Avatar"
+                                                        class="avatar"></span></pre>
+        </div>
+        <div class="column">
+            <p class="top-right">
+            <pre><span style="padding-left:1030px;color:white;">{{ loggeduser }}</span></pre>
+            </p>
+        </div>
+    </div>
+</div>
+<br>
+<!--Divs that will hold the charts-->
+<div class="container">
+    <div id="chart_div" class="first"></div>
+    <div id="chart_div2" class="second"></div>
+    <div class="third">
+
+        <div align="left" style="margin:15px; font-size:20px;">Achievements</div>
+        <br>
+
+        <div align="center"><img src="{% static  'userr.png'%}" alt="Avatar"
+                                 class="avatar1"></div>
+
+        <div align="center" style="margin:10px; font-weight: bold;">{{ loggeduser }}</div>
+        <br>
+
+        <div align="left" style="margin:10px;">Your personality type is:
+        </div>
+
+        <div><font style="font-weight: bold;color:#FFA500;font-size:25px;margin-left:10px;">{{ personality }}</font><br>
+            <p style="margin:10px;">Who is always in the path of Learning and Growth Enjoys Quests and Challenges Ready
+                to take on Intellectual battles and way to upgrade oneself
+            </p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
